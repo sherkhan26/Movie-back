@@ -85,10 +85,10 @@ export class AuthService {
   async issueTokenPair(userId: string) {
     const data = { _id: userId }
 
-    const refreshToken = this.jwtService.signAsync(data, {
+    const refreshToken = await this.jwtService.signAsync(data, {
       expiresIn: '10d',
     })
-    const accessToken = this.jwtService.signAsync(data, {
+    const accessToken = await this.jwtService.signAsync(data, {
       expiresIn: '1h',
     })
 
