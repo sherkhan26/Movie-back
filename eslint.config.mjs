@@ -38,6 +38,7 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-declaration-merging': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-parameter-properties': 'off',
+      '@typescript-eslint/no-base-to-string': 'off',
       'prettier/prettier': [
         'error',
         {
