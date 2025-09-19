@@ -1,14 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { ModelType } from '@typegoose/typegoose/lib/types'
 import { InjectModel } from 'nestjs-typegoose'
+import { MovieService } from 'src/movie/movie.service'
 import { CreateGenreDto } from './dto/create-genre.dto'
+import { Collection } from './genre.interface'
 import { GenreModel } from './genre.model'
 
 @Injectable()
 export class GenreService {
   constructor(
     // @ts-expect-error - Typegoose injection issue
-    @InjectModel(GenreModel) private readonly GenreModel: ModelType<GenreModel>
+    @InjectModel(GenreModel) private readonly GenreModel: ModelType<GenreModel>,
+    private readonly movieService: MovieService
   ) {}
 
   async bySlug(slug: string) {
@@ -47,7 +50,20 @@ export class GenreService {
   // todo
   async getCollections() {
     const genres = await this.getAll()
-    const collections = genres
+    const collections = await Promise.all(
+      genres.map(async (genre) => {
+        const moviesByGenre = await this.movieService.byGenres([genre._id])
+        const result: Collection = {
+          _id: String(genre._id),
+          image: moviesByGenre[0]?.bigPoster || '',
+          slug: genre.slug,
+          title: moviesByGenre[0]?.title || '',
+        }
+
+        return result
+      })
+    )
+
     return collections
   }
 
