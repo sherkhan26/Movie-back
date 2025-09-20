@@ -2,7 +2,7 @@ import { IsString } from 'class-validator'
 
 export class RefreshTokenDto {
   @IsString({
-    message: 'You did not pass the refresh token or it is not a string',
+    message: 'Вы не передали refresh token or или он не является строкой',
   })
   refreshToken: string
 }
