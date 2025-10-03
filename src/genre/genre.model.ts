@@ -5,7 +5,7 @@ export interface GenreModel extends Base {}
 
 export class GenreModel extends TimeStamps {
   @prop()
-  email: string
+  name: string
 
   @prop({ unique: true })
   slug: string

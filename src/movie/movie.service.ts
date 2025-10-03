@@ -112,11 +112,9 @@ export class MovieService {
 
   /* Utilites */
   async sendNotifications(dto: UpdateMovieDto) {
-    // if (process.env.NODE_ENV !== 'development')
-    //   await this.telegramService.sendPhoto(dto.poster)
-    await this.telegramService.sendPhoto(
-      'https://cdn.vokrug.tv/pic/product/b/5/d/1/b5d17062ea05487b643b631114a09845.jpeg'
-    )
+    if (process.env.NODE_ENV !== 'development')
+      await this.telegramService.sendPhoto(dto.poster)
+    // await this.telegramService.sendPhoto('https://i.redd.it/w3kr4m2fi3111.png')
 
     const msg = `<b>${dto.title}</b>`
 
